@@ -1,0 +1,133 @@
+{% extends "base.html" %} {%block content%}
+<div class="container">
+
+  <div class="alert alert-success fade show" role="alert">
+    <strong><a href="{% url 'cart' %}">Product Added to Cart . (click here to visit cart)</a>  </strong> 
+    <button type="button" class="close"  >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-6 mt-5 mb-5">
+      <img
+        width="400px"
+        height="500px"
+        src="{{product.img.url}}"
+        class="rounded img-fluid"
+        alt="..."
+      />
+    </div>
+    <div class="col-md-6 mt-5 mb-5">
+      <h2 class="row">{{product.title}}</h2>
+
+      <h5 class="mt-3 mb-2">{{currency}}{{product.unit_price}}</h5>
+      <p class="mr-5 mb-2" style="font-size: medium; color: rgb(37, 37, 37)">
+        {{product.description}}
+      </p>
+     
+      <div class="col-lg-3 mb-3">
+        <div class=" input-group">
+          <span class="input-group-btn">
+            <button
+              type="button"
+              class="quantity-left-minus btn btn-danger btn-number"
+              data-type="minus"
+              data-field=""
+            >
+            <span class="glyphicon glyphicon-minus">-</span>
+            </button>
+          </span>
+          <input
+          style="width:min-content; text-align:center"
+
+            type="text"
+            id="quantity"
+            name="quantity"
+            class="form-control input-number product-count"
+            value="1"
+            min="1"
+            max="100"
+          />
+          <span class="input-group-btn">
+            <button
+               
+              type="button"
+              class="quantity-right-plus btn btn-success btn-number"
+              data-type="plus"
+              data-field=""
+            >
+              <span class="glyphicon glyphicon-plus">+</span>
+            </button>
+          </span>
+        </div>
+      </div>
+     
+      <div class="">
+       
+        <button class="col-md-5 btn btn-lg cartit"  >Add to Cart</button>
+    
+        <button class="col-md-5 btn btn-lg ">Buy Now</button>
+
+      </div>
+    
+    </div>
+  </div>
+</div>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+  $('.alert').hide();
+  $('.close').click(function (){
+    $('.alert').hide();
+  })
+  $(document).ready(function () {
+    var quantitiy = 0;
+    $(".quantity-right-plus").click(function (e) {
+      // Stop acting like a button
+      e.preventDefault();
+      // Get the field name
+      var quantity = parseInt($("#quantity").val());
+
+
+      $("#quantity").val(quantity + 1);
+
+    });
+
+    $(".quantity-left-minus").click(function (e) {
+      // Stop acting like a button
+      e.preventDefault();
+      // Get the field name
+      var quantity = parseInt($("#quantity").val());
+
+      if (quantity > 0) {
+        $("#quantity").val(quantity - 1);
+      }
+    });
+  });
+
+  $(".cartit").click(()=>{
+    const xhttp = new XMLHttpRequest();
+
+    var formData = new FormData(); 
+    formData.append("cartId", parseInt(localStorage.getItem("cart")) );
+    console.log("ok1")
+    formData.append("productId", {{product.id}});
+    console.log("ok2")
+    formData.append("quantity", parseInt($("#quantity").val()))
+    console.log("ok3")
+    console.log(formData)
+    
+    xhttp.onload = function(){
+      console.log("product added to cart")
+      $('.alert').hide();
+      $('.alert').show();
+    }
+    
+    xhttp.open("post", "{% url 'addToCart' %}")
+    xhttp.send(formData);
+  });
+
+
+ 
+
+</script>
+{%endblock%}

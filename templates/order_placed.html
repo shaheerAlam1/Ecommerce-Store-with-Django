@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static%}
+{%block content%}	
+
+<section class="shop section ">
+    <div class="container text-center" >
+    <div>
+        <h1 class="h3">Your Order is Complete</h1>
+        <h2 class="h4">Your Order ID : {{order_id}}</h2>
+        <p class="text-primary">  <a href="{% url 'order_detail' order_id %}"> Please click here to see your order</a></p>
+        <div class="btn mt-2">
+            <a href="{% url ''%}"> Continue Shopping</a>
+        </div>
+    </div>
+    <div>
+        <img src="{%static 'images/order.gif'%}" alt="">
+    </div>
+</div>
+</section>
+<script>
+    localStorage.clear()
+</script>
+{% endblock %}
