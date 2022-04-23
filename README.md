@@ -1,7 +1,7 @@
 # Ecommerce-Store-with-Django
 Ecommerce store using python framework Django with beautiful and reponsive User Interface.This project has admin interface to manange staff , orders , products and their categories etc.
 
-Follow Only Steps to clone this project:
+Follow Only 9 Steps to clone this project:
 
 step1: install virtualenv. command: pip install virtualenv
 
